@@ -19,7 +19,7 @@
   } else {
 
   // mySQL query execution to submit data
-  $sql = "INSERT INTO notification (email) VALUES ('$email')";
+  $sql = "INSERT INTO diggit (email) VALUES ('$email')";
 
   if($sqlconn->query($sql) === true){
    echo "Submission successful";
