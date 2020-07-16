@@ -8,7 +8,7 @@
   $dbhost = "http://db4free.net:3306";
   $dbusername = "designerfe";
   $dbpassword = "12345678";
-  $tablename = "diggit";
+  $tablename = "stage7";
 
   // Attempt a MySQL connection.
   $sqlconn = new mysqli($dbhost, $dbusername, $dbpassword, $tablename);
