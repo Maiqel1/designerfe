@@ -8,10 +8,10 @@
   $dbhost = "http://db4free.net:3306";
   $dbusername = "designerfe";
   $dbpassword = "12345678";
-  $tablename = "stage7";
+  $dbName = "stage7";
 
   // Attempt a MySQL connection.
-  $sqlconn = new mysqli($dbhost, $dbusername, $dbpassword, $tablename);
+  $sqlconn = new mysqli($dbhost, $dbusername, $dbpassword, $dbName);
 
   // Check if connection was successful and return an error message if otherwise
   if($sqlconn === false){
