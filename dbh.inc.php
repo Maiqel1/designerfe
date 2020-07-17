@@ -1,25 +1,20 @@
 <?php
 
-$Servername = "http://db4free.net:3306";
-$dbUsername = "designerfe";
-$dbPassword = "12345678";
-$dbName = "stage7";
+$servername = "db4free.net:3306";
+$username = "designerfe";
+$password = "12345678";
 
-  $conn = mysqli_connect($Servername, $dbUsername, $dbPassword, $dbName);
-  //$conn = new_msqli("localhost", "id14345990_designerfe", "Mo0?i^Hc4uU&nWc@", "id14345990_stage7");
+// Connect to database
+$conn = mysqli_connect($servername, $username, $password, 'stage7');
 
-  /*mysqli_select_db($conn, "db name") or die("no db found");
+//Check connection
+if (!$conn) {
+    $data = array(
+        'signal' => 'bad',
+        'msg' => "Connection failed:".mysqli_connect_error()
+    );
+    
+    die(json_encode($data));
+}
 
-  if(isset($_POST['submit'])){
-    $email = $_POST['email'];
-
-    $query = "INSERT INTO diggit (email) VALUES('$email')";h2
-    if(mysqli_query($conn, $query)){
-      //echo "<h1>SUCCESS<h1>";
-      header("location: success.html");
-    } else {
-      // echo "<h1>FAILED<h1>";
-      header("location: failed.html");
-    }
-  }*/
- ?>
+?>
