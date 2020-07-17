@@ -14,11 +14,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL))
     $message = 'Email already exists';
 } else { 
     $sql = "INSERT INTO diggit2 (email) VALUES ('$email')";
-    
-    if (mysqli_query($conn, $sql)) {
-        $signal = 'ok';
-         header("location: index.html");
-}
+      header("location: index.html"); 
+   
 
 mysqli_close($conn); 
 
