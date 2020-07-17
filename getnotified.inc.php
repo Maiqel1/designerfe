@@ -1,34 +1,41 @@
-<?php
+?php
 
-// get value of email on submit
-  $email = $_POST['email'];
+include 'dbh.inc.php';
 
-  //database details
+$email = trim($_POST['email']);  
 
-  $dbhost = "http://db4free.net:3306";
-  $dbusername = "designerfe";
-  $dbpassword = "12345678";
-  $dbName = "stage7";
+$email = stripslashes($email);
 
-  // Attempt a MySQL connection.
-  $sqlconn = new mysqli($dbhost, $dbusername, $dbpassword, $dbName);
+$email = htmlspecialchars($email); // to remove special characters
 
-  // Check if connection was successful and return an error message if otherwise
-  if($sqlconn === false){
-    die("ERROR: Couldn't connect to database. " . $mysqli->connect_error);
-  } else {
+$result = mysqli_num_rows(mysqli_query($conn, "SELECT 1 FROM diggit WHERE email = '$email';"));
 
-  // mySQL query execution to submit data
-  $sql = "INSERT INTO diggit2 (email) VALUES ('$email')";
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) // Check if email is valid
+{
+    $signal = 'bad';
+    $message = 'Please enter a valid email';
+} elseif ($result > 0) // Check if email exists already
+{
+    $signal = 'bad';
+    $message = 'Email already exists';
+} else { // All is good.. Lets save the email
+    $sql = "INSERT INTO diggit (email) VALUES ('$email')";
+    
+    if (mysqli_query($conn, $sql)) {
+        $signal = 'ok';
+        $message = 'Email registered successfully';
+    } else {
+        $signal = 'bad';
+        $message = "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+}
 
-  if($sqlconn->query($sql) === true){
-   echo "Submission successful";
-  } else{
-   echo "ERROR: Could not execute $sql. " . $mysqli->error;
-  }
+mysqli_close($conn); // Close connection
 
-  // Close the connection
-  $sqlconn->close();
-  }
+$data = array(
+    'signal' => $signal,
+    'msg' => $message
+);
 
-?>
+// Return data
+echo json_encode($data);
