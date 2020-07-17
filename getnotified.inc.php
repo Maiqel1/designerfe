@@ -24,5 +24,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL))
     }
 }
 
+  header("location: index.html");
+
 mysqli_close($conn);
+
+  header("location: index.html");
 
