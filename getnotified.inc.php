@@ -8,21 +8,21 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 {
     $signal = 'bad';
     $message = 'Please enter a valid email';
-} elseif ($result > 0) 
+} elseif ($result > 0)
 {
     $signal = 'bad';
     $message = 'Email already exists';
-} else { 
+} else {
     $sql = "INSERT INTO diggit2 (email) VALUES ('$email')";
-      header("location: index.html"); 
-   
 
-mysqli_close($conn); 
+    if (mysqli_query($conn, $sql)) {
+        $signal = 'ok';
+        $message = 'Email registered successfully';
+    } else {
+        $signal = 'bad';
+        $message = "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+}
 
-$data = array(
-    'signal' => $signal,
-    'msg' => $message
-);
+mysqli_close($conn);
 
-// Return data
-echo json_encode($data);
